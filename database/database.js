@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize")
-const sequelize = require("sequelize")
 
 const DATABASE_NAME = 'blog'
 const DB_USER = 'postgres'
