@@ -1,1 +1,1 @@
-# A simple blog created from scratch using NodeJS
+# A simple NodeJS blog 😎
