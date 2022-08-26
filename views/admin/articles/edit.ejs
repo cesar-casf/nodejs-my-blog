@@ -1,0 +1,66 @@
+<%- include('../../partials/header.ejs'); -%>
+
+    <body>
+        <%- include('../../partials/navbar.ejs'); -%>
+
+            <div class="container">
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h2>Editar Artigo</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="/articles/update" method="post">
+                            <input type="text" name="title" value="<%= article.title %>" class="form-control mb-4">
+                            <textarea name="body" id="article" class="form-control mt-2"><%- article.body %></textarea>
+                            <label for="category" class="mt-4">Categoria</label>
+                            <select name="category" id="category" class="form-control">
+                                <% categories.forEach((category)=> { %>
+
+                                        <% if(category.id == article.categoryId){ %>
+                                            <option value="<%= category.id %>" selected>
+                                                <%= category.title %>
+                                            </option>
+                                        <% } else { %>
+                                            <option value="<%= category.id %>">
+                                                <%= category.title %>
+                                            </option>
+                                        <% } %>
+                                    <% }) %>
+                            </select>
+                            <input type="hidden" name="id" value="<%= article.id %>">
+                            <button class="btn-success btn mt-4" type="submit">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </body>
+    <%- include('../../partials/footer.ejs'); -%>
+
+        <script src="/tinymce/tinymce.min.js"></script>
+        <script>
+            tinymce.init({
+                selector: "#article",
+                plugins: [
+                    'advlist',
+                    'autolink',
+                    'link',
+                    'image',
+                    'lists',
+                    'preview',
+                    'searchreplace',
+                    'wordcount',
+                    'fullscreen',
+                    'insertdatetime',
+                    'media',
+                    'save',
+                    'table',
+                    'emoticons',
+                ],
+                language: 'pt_BR'
+            });
+            setTimeout(() => {
+                let tinyLogo = document.getElementsByClassName("tox-statusbar__branding")
+                tinyLogo.item(0).style.display = 'none'
+            }, 150)
+        </script>
