@@ -9,7 +9,8 @@ const DB_HOST = 'localhost'
 const connection = new Sequelize(DATABASE_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
     dialect: "postgres",
-    timezone: "-03:00"
+    timezone: "-03:00",
+    logging: false
 })
 
 module.exports = connection
