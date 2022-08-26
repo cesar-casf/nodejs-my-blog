@@ -28,13 +28,17 @@ app.use("/", categoriesController)
 app.use("/", articlesController)
 
 app.get("/", (req, res) => {
+    const result = {
+        page: 1
+    }
     Article.findAll({
         order: [
             ['id', 'DESC']
-        ]
+        ],
+        limit: 4
     }).then((articles) => {
         Category.findAll().then((categories) => {
-            res.render("index", {articles: articles, categories: categories})
+            res.render("index", {articles: articles, categories: categories, result: result})
         })
     })
 })
