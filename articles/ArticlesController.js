@@ -129,7 +129,7 @@ router.get("/articles/page/:num", (req, res) => {
             }
 
             Category.findAll().then((categories) => {
-                res.render("admin/articles/page", { result: result, categories: categories })
+                res.render("admin/articles/page", { result: result, categories: categories, categories_page: false })
             })
         })
     }

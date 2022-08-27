@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
         limit: 4
     }).then((articles) => {
         Category.findAll().then((categories) => {
-            res.render("index", {articles: articles, categories: categories, result: result})
+            res.render("index", {articles: articles, categories: categories, result: result, categories_page: false})
         })
     })
 })
@@ -72,7 +72,17 @@ app.get("/category/:slug", (req, res) => {
     }).then((category) => {
         if (category != undefined) {
             Category.findAll().then((categories) => {
-                res.render("index", {articles: category.articles, categories: categories})
+                res.render("index", {
+                    articles: {
+                        rows: category.articles
+                    }, 
+                    categories: categories,
+                    result: {
+                        is_last_page: true,
+                        page: 1
+                    },
+                    categories_page: true
+                })
             })
         } else {
             res.redirect("/")
