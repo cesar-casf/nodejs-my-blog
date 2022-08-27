@@ -118,6 +118,9 @@ router.get("/articles/page/:num", (req, res) => {
                 is_last_page = true
             else
                 is_last_page = false
+
+            if((offset+1) > articles.count)
+                res.redirect("/")
             
             var result = {
                 articles: articles,

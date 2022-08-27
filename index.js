@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
     const result = {
         page: 1
     }
-    Article.findAll({
+    Article.findAndCountAll({
         order: [
             ['id', 'DESC']
         ],
