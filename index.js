@@ -1,10 +1,15 @@
 const express = require("express")
+const session = require("express-session")
+
 const connection = require("./database/database.js")
 
 const categoriesController = require("./categories/CategoriesController")
 const articlesController = require("./articles/ArticlesController")
+const userController = require("./users/UserController")
+
 const Article = require("./articles/Article")
 const Category = require("./categories/Category")
+const User = require("./users/User")
 
 const log = console.log
 const app = express()
@@ -24,8 +29,18 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
 
+app.use(session({
+    secret: "dkDOKD057cc",
+    cookie: {
+        maxAge: 24*60*60*1000
+    },
+    resave: true,
+    saveUninitialized: true
+}))
+
 app.use("/", categoriesController)
 app.use("/", articlesController)
+app.use("/", userController)
 
 app.get("/", (req, res) => {
     const result = {
@@ -64,6 +79,9 @@ app.get("/:slug", (req, res) => {
 
 app.get("/category/:slug", (req, res) => {
     var slug = req.params.slug
+    const result = {
+        page: 1
+    }
     Category.findOne({
         where: {
             slug: slug
@@ -72,7 +90,7 @@ app.get("/category/:slug", (req, res) => {
     }).then((category) => {
         if (category != undefined) {
             Category.findAll().then((categories) => {
-                res.render("index", {articles: category.articles, categories: categories})
+                res.render("index", {articles: category.articles, categories: categories, result: result})
             })
         } else {
             res.redirect("/")
